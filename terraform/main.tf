@@ -23,3 +23,10 @@ resource "google_container_cluster" "iac-cluster" {
     machine_type = var.instance_type
   }
 }
+
+# Make a change without PR
+#
+resource "google_compute_address" "default" {
+  name   = "my-address"
+  region = var.region
+}
