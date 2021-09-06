@@ -32,7 +32,7 @@ resource "google_compute_address" "default" {
 }
 
 # PR change
-resource "google_compute_address" "default" {
+resource "google_compute_address" "pr-address" {
   name   = "pr-address"
   region = var.region
 }
