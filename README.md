@@ -39,6 +39,18 @@ Create a trigger so that when push is done in git it auto "builds"
 ## Change
 Trigger a change with a PR to show one way of doing approval and/or show it via Cloud Build
 
+
+git checkout -b new-feature
+
+alter something
+
+git push --set-upstream origin new-feature
+git checkout main
+
+Accept PR in GitHub UI
+Show the Cloud Build pipeline has kicked off
+
+
 ## Validator step
 
 Add the GCP validator into the mix
@@ -50,6 +62,9 @@ What if I have already configured a project, can I export what TF could look lik
 
 ## Modules
 Discuss and highlight modules with the other TF files (create webserver etc.)
+
+## Staging
+Show the example from https://cloud.google.com/architecture/managing-infrastructure-as-code
 
 # License
 
