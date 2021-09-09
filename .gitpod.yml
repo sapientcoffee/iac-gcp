@@ -10,5 +10,4 @@ ports:
 
 
 # Container image with Terraform
-image:
-  file: hashicorp/terraform
+image: hashicorp/terraform
