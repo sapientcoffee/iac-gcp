@@ -10,4 +10,5 @@
 
 
 # Container image with Terraform
-image: gcr.io/cloudshell-images/cloudshell:latest
+#image: gcr.io/cloudshell-images/cloudshell:latest
+image: clijockey/platform-env:testing
