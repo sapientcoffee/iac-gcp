@@ -26,13 +26,13 @@ resource "google_container_cluster" "iac-cluster" {
 
 # Make a change without PR
 #
-resource "google_compute_address" "default" {
-  name   = "my-address"
-  region = var.region
-}
+# resource "google_compute_address" "default" {
+#   name   = "my-address"
+#   region = var.region
+# }
 
 # PR change
-resource "google_compute_address" "pr-address" {
-  name   = "pr-address"
-  region = var.region
-}
+# resource "google_compute_address" "pr-address" {
+#   name   = "pr-address"
+#   region = var.region
+# }
