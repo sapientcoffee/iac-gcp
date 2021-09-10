@@ -11,4 +11,4 @@
 
 # Container image with Terraform
 #image: gcr.io/cloudshell-images/cloudshell:latest
-image: clijockey/platform-env:testing
+image: europe-docker.pkg.dev/coffee-with-rob/platform-ops/platform-ops:latest
