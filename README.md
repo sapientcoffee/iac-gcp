@@ -50,6 +50,10 @@ git checkout main
 Accept PR in GitHub UI
 Show the Cloud Build pipeline has kicked off
 
+git checkout main
+
+Notice that the stuff just changed is not local ... need to do a `git pull`
+
 
 ## Validator step
 
