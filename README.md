@@ -18,20 +18,72 @@ You could script these options with your language of choice
 ## Terraform
 
 ### Local
+```bash
 cd terraform
+```
+```hcl
 terraform init
+terraform plan
+```
+
+```hcl
+terraform apply
+```
+
+If you look in the directory you will see a local state file, how do we make this remote?
 
 ### GCS remote state
-UNcomment the `state.tf` contents
+Uncomment the `state.tf` contents
+
+```hcl
 terraform apply
+```
+
+The `terraform` cli will walk through the directory and read all the `.tf` files.
+
+Great we now have the ability to codify our configuration and the state is stored somewhere safe (I hope). Now how can multiple engineers work on the infrastructure?
 
 ## Git
-History/audit - click around the GitHub UI and show some of the `git` CLI explaining what it is doing.
+Developers have been using `git` for years, but it doenst mean source control is limited to only developers. We can utilse it to hlp operations or infrastructure.
+
+Show the git (in my case GitHub) UI to highlight
+* History
+* audit 
+* click around the GitHub UI and show some of the `git` CLI explaining what it is doing.
+
+Now that we have the configuration and satet stored in a remote location this enables us to leverage another practice that has serveed the development world well and helps with automation to reduce the chance of human error and also execute changes as soon as approval occurd (in you have that step)
 
 ## Cloud Build
-Now we have stuff in Git could we automate the deployment and testing?
 
-Show cloud build and explain what it is doing and run an example.
+The advantage of pipline stuff with Cloud Build is that you can add additonal steps before and after execution;
+* Pre-flight checks
+* Post flight checks
+* Config validation
+* Security analysis
+* chat channel notifications
+
+I have used cloud build;
+
+<screenshot of cloud build UI>
+
+When you create the cloud build job you specify a `yaml` file with instuctions of what to do.
+
+Our example is `cloudbuild.yaml` that does 2 things, `terraform init` & `terraform apply` using a container to execute the commands in.
+
+```yaml
+steps:
+- name: 'hashicorp/terraform:1.0.6'
+  env:
+  - 'GOOGLE_CLOUD_PROJECT=${PROJECT_ID}'
+  dir: 'terraform/'
+  args: ['init']
+
+- name: 'hashicorp/terraform:1.0.6'
+  env:
+  - 'GOOGLE_CLOUD_PROJECT=${PROJECT_ID}'
+  dir: 'terraform/'
+  args: ['apply', '-auto-approve']
+```
 
 ### Trigger
 Create a trigger so that when push is done in git it auto "builds"
@@ -39,13 +91,16 @@ Create a trigger so that when push is done in git it auto "builds"
 ## Change
 Trigger a change with a PR to show one way of doing approval and/or show it via Cloud Build
 
-
+```bash
 git checkout -b new-feature
+```
 
 alter something
 
+```bash
 git push --set-upstream origin new-feature
 git checkout main
+```
 
 Accept PR in GitHub UI
 Show the Cloud Build pipeline has kicked off
