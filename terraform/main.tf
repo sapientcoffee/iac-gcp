@@ -1,21 +1,21 @@
-resource "google_compute_network" "coffee-virt-net" {
+resource "google_compute_network" "tf-virt-net" {
   name = "${var.prefix}-virt-net"
 }
 
 // Espresso Subnet
 resource "google_compute_subnetwork" "subnet-espresso" {
-  name          = "${var.prefix}-subnet-infrastructure"
+  name          = "${var.prefix}-espresso"
   region        = "${var.region}"
   ip_cidr_range = "192.168.101.0/26"
-  network       = "${google_compute_network.coffee-virt-net.self_link}"
+  network       = "${google_compute_network.tf-virt-net.self_link}"
 }
 
 // Flat White Subnet
 resource "google_compute_subnetwork" "flat-white" {
-  name          = "${var.prefix}-subnet-ert"
+  name          = "${var.prefix}-flat-white"
   region        = "${var.region}"
   ip_cidr_range = "192.168.16.0/22"
-  network       = "${google_compute_network.coffee-virt-net.self_link}"
+  network       = "${google_compute_network.tf-virt-net.self_link}"
 }
 
 
