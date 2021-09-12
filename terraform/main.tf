@@ -1,5 +1,7 @@
 resource "google_compute_network" "tf-virt-net" {
   name = "${var.prefix}-virt-net"
+  auto_create_subnetworks = false
+  mtu                     = 1460
 }
 
 // Espresso Subnet
