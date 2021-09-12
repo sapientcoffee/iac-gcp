@@ -15,10 +15,10 @@ variable "project" {
 
 variable "prefix" {
   type = string
-  default = "coffee"
+  default = "rentokil"
 }
 
 variable "env" {
   type = string
-  default = "dev"
+  default = "coffee"
 }
