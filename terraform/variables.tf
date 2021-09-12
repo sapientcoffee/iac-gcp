@@ -17,3 +17,8 @@ variable "prefix" {
   type = string
   default = "coffee"
 }
+
+variable "env" {
+  type = string
+  default = "dev"
+}
