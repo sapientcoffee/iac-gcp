@@ -13,16 +13,16 @@
 # limitations under the License.
 #
 apiVersion: constraints.gatekeeper.sh/v1alpha1
-kind: GCPStorageLocationConstraintV1
+kind: GCPGKEAllowedNodeSAConstraintV1
 metadata:
-  name: allow_some_storage_location
+  name: gke_allowed_node_service_account_scope_customized
+  annotations:
+    benchmark: GKE_HARDENING_GUIDELINE
 spec:
   severity: high
-  match:
-    target: ["organization/*"]
-  parameters:
-    mode: "allowlist"
-    locations:
-      - "europe-west2"
-      - "europe-north1"
-    exemptions: []
+    
+  parameters: 
+    oauth_scopes:
+      - "https://www.googleapis.com/auth/logging.write"
+      - "https://www.googleapis.com/auth/monitoring"
+      - "https://www.googleapis.com/auth/devstorage.read_only"

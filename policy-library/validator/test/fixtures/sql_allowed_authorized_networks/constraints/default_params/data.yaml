@@ -13,16 +13,12 @@
 # limitations under the License.
 #
 apiVersion: constraints.gatekeeper.sh/v1alpha1
-kind: GCPStorageLocationConstraintV1
+kind: GCPSQLAllowedAuthorizedNetworksConstraintV1
 metadata:
-  name: allow_some_storage_location
+  name: sql_allowed_authorized_networks_default
 spec:
   severity: high
-  match:
-    target: ["organization/*"]
-  parameters:
-    mode: "allowlist"
-    locations:
-      - "europe-west2"
-      - "europe-north1"
-    exemptions: []
+    
+   # No allowed authorized networks indicates that no authorized networks can
+   # be configured on the resource.
+  parameters: {}

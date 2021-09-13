@@ -1,3 +1,4 @@
+#
 # Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,17 +13,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-apiVersion: constraints.gatekeeper.sh/v1alpha1
-kind: GCPStorageLocationConstraintV1
-metadata:
-  name: allow_some_storage_location
-spec:
-  severity: high
-  match:
-    target: ["organization/*"]
-  parameters:
-    mode: "allowlist"
-    locations:
-      - "europe-west2"
-      - "europe-north1"
-    exemptions: []
+
+package templates.gcp.GCPSQLSSLConstraintV1
+
+import data.validator.gcp.lib as lib
+
+deny[{
+	"msg": message,
+	"details": metadata,
+}] {
+	asset := input.asset
+	asset.asset_type == "sqladmin.googleapis.com/Instance"
+
+	settings := asset.resource.data.settings
+
+	ipConfiguration := lib.get_default(settings, "ipConfiguration", {})
+	requireSsl := lib.get_default(ipConfiguration, "requireSsl", false)
+	requireSsl == false
+
+	message := sprintf("%v does not require SSL", [asset.name])
+	metadata := {"resource": asset.name}
+}

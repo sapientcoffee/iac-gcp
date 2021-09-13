@@ -13,16 +13,12 @@
 # limitations under the License.
 #
 apiVersion: constraints.gatekeeper.sh/v1alpha1
-kind: GCPStorageLocationConstraintV1
+kind: GCPGLBExternalIpAccessConstraintV1
 metadata:
-  name: allow_some_storage_location
+  name: forbid_external_api_denylist
 spec:
   severity: high
-  match:
-    target: ["organization/*"]
   parameters:
-    mode: "allowlist"
-    locations:
-      - "europe-west2"
-      - "europe-north1"
-    exemptions: []
+    mode: "denylist"
+    instances:
+      - //compute.googleapis.com/projects/test-project/global/forwardingRules/ext-ip2

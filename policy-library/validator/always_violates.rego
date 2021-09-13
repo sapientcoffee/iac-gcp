@@ -1,4 +1,5 @@
-# Copyright 2019 Google LLC
+#
+# Copyright 2018 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,17 +13,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-apiVersion: constraints.gatekeeper.sh/v1alpha1
-kind: GCPStorageLocationConstraintV1
-metadata:
-  name: allow_some_storage_location
-spec:
-  severity: high
-  match:
-    target: ["organization/*"]
-  parameters:
-    mode: "allowlist"
-    locations:
-      - "europe-west2"
-      - "europe-north1"
-    exemptions: []
+
+package templates.gcp.GCPAlwaysViolatesConstraintV1
+
+import data.validator.gcp.lib as lib
+
+deny[{
+	"msg": message,
+	"details": metadata,
+}] {
+	constraint := input.constraint
+	lib.get_constraint_info(constraint, info)
+	asset := input.asset
+
+	message := sprintf("%v violates on all resources.", [info.name])
+	metadata := {
+		"constraint": info,
+		"asset": asset,
+	}
+}

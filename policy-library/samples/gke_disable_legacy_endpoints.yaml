@@ -13,16 +13,14 @@
 # limitations under the License.
 #
 apiVersion: constraints.gatekeeper.sh/v1alpha1
-kind: GCPStorageLocationConstraintV1
+kind: GCPGKEDisableLegacyEndpointsConstraintV1
 metadata:
-  name: allow_some_storage_location
+  name: disable_gke_legacy_endpoints
+  annotations:
+    benchmark: GKE_HARDENING_GUIDELINE
 spec:
   severity: high
   match:
-    target: ["organization/*"]
-  parameters:
-    mode: "allowlist"
-    locations:
-      - "europe-west2"
-      - "europe-north1"
-    exemptions: []
+    gcp:
+      target: ["organization/*"]
+  parameters: {}

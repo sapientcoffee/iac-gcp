@@ -13,16 +13,33 @@
 # limitations under the License.
 #
 apiVersion: constraints.gatekeeper.sh/v1alpha1
-kind: GCPStorageLocationConstraintV1
+kind: GCPSQLLocationConstraintV1
 metadata:
-  name: allow_some_storage_location
+  name: sql_location_denylist_all
 spec:
   severity: high
-  match:
-    target: ["organization/*"]
   parameters:
-    mode: "allowlist"
+    mode: "denylist"
     locations:
-      - "europe-west2"
-      - "europe-north1"
+    - asia-east1
+    - asia-east2
+    - asia-northeast1
+    - asia-northeast2
+    - asia-south1
+    - asia-southeast1
+    - australia-southeast1
+    - europe-north1
+    - europe-west1
+    - europe-west2
+    - europe-west3
+    - europe-west4
+    - europe-west6
+    - northamerica-northeast1
+    - southamerica-east1
+    - us-central
+    - us-central1
+    - us-east1
+    - us-east4
+    - us-west1
+    - us-west2
     exemptions: []

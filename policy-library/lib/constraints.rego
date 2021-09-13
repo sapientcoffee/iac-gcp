@@ -1,4 +1,5 @@
-# Copyright 2019 Google LLC
+#
+# Copyright 2018 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,17 +13,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-apiVersion: constraints.gatekeeper.sh/v1alpha1
-kind: GCPStorageLocationConstraintV1
-metadata:
-  name: allow_some_storage_location
-spec:
-  severity: high
-  match:
-    target: ["organization/*"]
-  parameters:
-    mode: "allowlist"
-    locations:
-      - "europe-west2"
-      - "europe-north1"
-    exemptions: []
+
+package validator.gcp.lib
+
+# Function to fetch the constraint spec
+# Usage:
+# get_constraint_params(constraint, params)
+
+get_constraint_params(constraint) = params {
+	params := constraint.spec.parameters
+}
+
+# Function to fetch constraint info
+# Usage:
+# get_constraint_info(constraint, info)
+
+get_constraint_info(constraint) = info {
+	info := {
+		"name": constraint.metadata.name,
+		"kind": constraint.kind,
+	}
+}

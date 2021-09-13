@@ -15,14 +15,11 @@
 apiVersion: constraints.gatekeeper.sh/v1alpha1
 kind: GCPStorageLocationConstraintV1
 metadata:
-  name: allow_some_storage_location
+  name: storage_location_denylist_one
 spec:
   severity: high
-  match:
-    target: ["organization/*"]
   parameters:
-    mode: "allowlist"
+    mode: "denylist"
     locations:
-      - "europe-west2"
-      - "europe-north1"
+    - US
     exemptions: []

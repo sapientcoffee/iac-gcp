@@ -12,17 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+# This constraint checks that all GCS buckets have CMEK (Customer managed encryption keys)
 apiVersion: constraints.gatekeeper.sh/v1alpha1
-kind: GCPStorageLocationConstraintV1
+kind: GCPStorageCMEKEncryptionConstraintV1
 metadata:
-  name: allow_some_storage_location
+  name: storage_cmek_encryption
 spec:
   severity: high
   match:
     target: ["organization/*"]
-  parameters:
-    mode: "allowlist"
-    locations:
-      - "europe-west2"
-      - "europe-north1"
-    exemptions: []
+  parameters: {}

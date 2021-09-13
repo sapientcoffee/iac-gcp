@@ -1,4 +1,5 @@
-# Copyright 2019 Google LLC
+#
+# Copyright 2018 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,17 +13,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-apiVersion: constraints.gatekeeper.sh/v1alpha1
-kind: GCPStorageLocationConstraintV1
-metadata:
-  name: allow_some_storage_location
-spec:
-  severity: high
-  match:
-    target: ["organization/*"]
-  parameters:
-    mode: "allowlist"
-    locations:
-      - "europe-west2"
-      - "europe-north1"
-    exemptions: []
+
+package templates.gcp.GCPSQLPublicIpConstraintV1
+
+import data.validator.gcp.lib as lib
+
+deny[{
+	"msg": message,
+	"details": metadata,
+}] {
+	asset := input.asset
+	asset.asset_type == "sqladmin.googleapis.com/Instance"
+
+	ip_config := lib.get_default(asset.resource.data.settings, "ipConfiguration", {})
+	ipv4 := lib.get_default(ip_config, "ipv4Enabled", true)
+	ipv4 == true
+
+	message := sprintf("%v is not allowed to have a Public IP.", [asset.name])
+	metadata := {"resource": asset.name}
+}

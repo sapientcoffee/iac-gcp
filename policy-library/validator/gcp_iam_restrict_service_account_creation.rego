@@ -12,17 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-apiVersion: constraints.gatekeeper.sh/v1alpha1
-kind: GCPStorageLocationConstraintV1
-metadata:
-  name: allow_some_storage_location
-spec:
-  severity: high
-  match:
-    target: ["organization/*"]
-  parameters:
-    mode: "allowlist"
-    locations:
-      - "europe-west2"
-      - "europe-north1"
-    exemptions: []
+
+package templates.gcp.GCPIAMRestrictServiceAccountCreationConstraintV1
+
+import data.validator.gcp.lib as lib
+
+deny[{
+	"msg": message,
+	"details": metadata,
+}] {
+	constraint := input.constraint
+	asset := input.asset
+	asset.asset_type == "iam.googleapis.com/ServiceAccount"
+	service_account := asset.resource.data
+	service_account_email := service_account.email
+	endswith(service_account_email, "iam.gserviceaccount.com")
+	message := sprintf("%v: should not exist by policy.", [asset.name])
+	metadata := {"resource": asset.name}
+}

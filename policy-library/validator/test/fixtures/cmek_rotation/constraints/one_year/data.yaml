@@ -13,16 +13,13 @@
 # limitations under the License.
 #
 apiVersion: constraints.gatekeeper.sh/v1alpha1
-kind: GCPStorageLocationConstraintV1
+kind: GCPCMEKRotationConstraintV1
 metadata:
-  name: allow_some_storage_location
+  name: cmek_rotation_one_year
 spec:
   severity: high
-  match:
-    target: ["organization/*"]
   parameters:
-    mode: "allowlist"
-    locations:
-      - "europe-west2"
-      - "europe-north1"
-    exemptions: []
+    # Valid time units are  "ns", "us" (or "µs"), "ms", "s", "m", "h"
+    # This is 365 days
+    period: 8760h
+

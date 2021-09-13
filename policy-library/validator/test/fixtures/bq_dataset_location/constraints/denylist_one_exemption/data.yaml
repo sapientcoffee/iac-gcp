@@ -13,16 +13,14 @@
 # limitations under the License.
 #
 apiVersion: constraints.gatekeeper.sh/v1alpha1
-kind: GCPStorageLocationConstraintV1
+kind: GCPBigQueryDatasetLocationConstraintV1
 metadata:
-  name: allow_some_storage_location
+  name: bq_dataset_location_denylist_one_exemption
 spec:
   severity: high
-  match:
-    target: ["organization/*"]
   parameters:
-    mode: "allowlist"
+    mode: "denylist"
     locations:
-      - "europe-west2"
-      - "europe-north1"
-    exemptions: []
+    - us-west2
+    exemptions: 
+    - //bigquery.googleapis.com/projects/sandbox2/datasets/us_west2_test_dataset

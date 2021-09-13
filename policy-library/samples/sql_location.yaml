@@ -13,9 +13,9 @@
 # limitations under the License.
 #
 apiVersion: constraints.gatekeeper.sh/v1alpha1
-kind: GCPStorageLocationConstraintV1
+kind: GCPSQLLocationConstraintV1
 metadata:
-  name: allow_some_storage_location
+  name: allow_some_sql_location
 spec:
   severity: high
   match:
@@ -23,6 +23,5 @@ spec:
   parameters:
     mode: "allowlist"
     locations:
-      - "europe-west2"
-      - "europe-north1"
+    - asia-southeast1
     exemptions: []

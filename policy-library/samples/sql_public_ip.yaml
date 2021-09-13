@@ -13,16 +13,13 @@
 # limitations under the License.
 #
 apiVersion: constraints.gatekeeper.sh/v1alpha1
-kind: GCPStorageLocationConstraintV1
+kind: GCPSQLPublicIpConstraintV1
 metadata:
-  name: allow_some_storage_location
+  name: prevent-public-ip-cloudsql
+  annotations:
+    description: Prevents a public IP from being assigned to a Cloud SQL instance.
 spec:
   severity: high
   match:
     target: ["organization/*"]
-  parameters:
-    mode: "allowlist"
-    locations:
-      - "europe-west2"
-      - "europe-north1"
-    exemptions: []
+    exclude: [] # optional, default is no exclusions
