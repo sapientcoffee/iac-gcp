@@ -32,6 +32,12 @@ terraform apply
 
 If you look in the directory you will see a local state file, how do we make this remote?
 
+
+Its just as easy to remove the config
+```hcl
+terraform destroy
+```
+
 ### GCS remote state
 Uncomment the `state.tf` contents
 

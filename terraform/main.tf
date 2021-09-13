@@ -1,5 +1,6 @@
-resource "google_compute_network" "tf-virt-net" {
+resource "google_compute_network" "iac-virt-net" {
   name = "${var.prefix}-virt-net"
+  project = "${var.project}"
   auto_create_subnetworks = false
   mtu                     = 1460
 }
@@ -8,32 +9,59 @@ resource "google_compute_network" "tf-virt-net" {
 resource "google_compute_subnetwork" "subnet-espresso" {
   name          = "${var.prefix}-espresso"
   region        = "${var.region}"
+  project       = "${var.project}"
   ip_cidr_range = "192.168.101.0/26"
-  network       = "${google_compute_network.tf-virt-net.self_link}"
+  network       = "${google_compute_network.iac-virt-net.self_link}"
+
+#   // Add some logging
+#   log_config {
+#     aggregation_interval = "INTERVAL_10_MIN"
+#     flow_sampling        = 0.5
+#     metadata             = "INCLUDE_ALL_METADATA"
+#   }
 }
 
 // Flat White Subnet
 resource "google_compute_subnetwork" "flat-white" {
   name          = "${var.prefix}-flat-white"
+  project       = "${var.project}"
   region        = "${var.region}"
   ip_cidr_range = "192.168.16.0/22"
-  network       = "${google_compute_network.tf-virt-net.self_link}"
+  network       = "${google_compute_network.iac-virt-net.self_link}"
 }
 
+// Make a change without PR
+# resource "google_compute_firewall" "allow-something" {
+#   name    = "${var.prefix}-allow-something"
+#   network = "${google_compute_network.iac-virt-net.name}"
+#   //project = "${var.project}"
+#   description = "Creates firewall rule targeting tagged instances"
 
-# # Make a change without PR
-# #
-# # resource "google_compute_address" "default" {
-# #   name   = "my-address"
-# #   region = var.region
-# # }
+#   allow {
+#     protocol = "icmp"
+#   }
+#   allow {
+#     protocol = "tcp"
+#     ports    = ["80", "8080", "1000-2000"]
+#   }
+#   source_tags = ["web"]
+# }
 
-# # PR change
-# # resource "google_compute_address" "pr-address" {
-# #   name   = "pr-address"
-# #   region = var.region
-# # }
 
+// Do this one with a PR
+# resource "google_compute_firewall" "allow-ssh" {
+#   name    = "${var.prefix}-allow-ssh"
+#   network = "${google_compute_network.iac-virt-net.name}"
+#   //project = "${var.project}"
+
+#   allow {
+#     protocol = "tcp"
+#     ports    = ["22"]
+#   }
+
+#   source_ranges = ["0.0.0.0/0"]
+#   target_tags   = ["allow-ssh"]
+# }
 
 # # This queries GCP for the latest Kubernetes engine version.
 # data "google_container_engine_versions" "versions" {
@@ -56,16 +84,3 @@ resource "google_compute_subnetwork" "flat-white" {
 #     machine_type = var.instance_type
 #   }
 # }
-
-# # Make a change without PR
-# #
-# # resource "google_compute_address" "default" {
-# #   name   = "my-address"
-# #   region = var.region
-# # }
-
-# # PR change
-# # resource "google_compute_address" "pr-address" {
-# #   name   = "pr-address"
-# #   region = var.region
-# # }
