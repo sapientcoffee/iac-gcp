@@ -49,24 +49,24 @@ resource "google_compute_firewall" "allow-something" {
 
 
 // Do this one with a PR
-# resource "google_compute_firewall" "allow-ssh" {
-#   name    = "${var.prefix}-allow-ssh"
-#   network = "${google_compute_network.iac-virt-net.name}"
-#   //project = "${var.project}"
+resource "google_compute_firewall" "allow-ssh" {
+  name    = "${var.prefix}-allow-ssh"
+  network = "${google_compute_network.iac-virt-net.name}"
+  //project = "${var.project}"
 
-#   allow {
-#     protocol = "tcp"
-#     ports    = ["22"]
-#   }
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
 
-#   source_ranges = ["0.0.0.0/0"]
-#   target_tags   = ["allow-ssh"]
-# }
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["allow-ssh"]
+}
 
-# # This queries GCP for the latest Kubernetes engine version.
-# data "google_container_engine_versions" "versions" {
-#   location = var.region
-# }
+# This queries GCP for the latest Kubernetes engine version.
+data "google_container_engine_versions" "versions" {
+  location = var.region
+}
 
 # # This creates a new Google Kubernetes Engine (GKE) cluster inside our project.
 # # This operation can take a few minutes to complete, but Terraform will show
