@@ -89,6 +89,7 @@ steps:
 Create a trigger so that when push is done in git it auto "builds"
 
 ## Change
+
 Trigger a change with a PR to show one way of doing approval and/or show it via Cloud Build
 
 ```bash
@@ -124,6 +125,9 @@ Discuss and highlight modules with the other TF files (create webserver etc.)
 
 ## Staging
 Show the example from https://cloud.google.com/architecture/managing-infrastructure-as-code
+
+http://iac.gcp-demo.coffee
+https://pantheon.corp.google.com/cloud-build/builds;region=global/742f7c4d-66b9-4563-94e6-4d92a2a60f6b?project=coffee-with-rob
 
 # License
 
