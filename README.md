@@ -112,7 +112,7 @@ Notice that the stuff just changed is not local ... need to do a `git pull`
 
 ## Validator step
 
-Add the GCP validator into the mix
+![](images/forseti-pipeline.png)
 
 ## Config Export
 What if I have already configured a project, can I export what TF could look like?
