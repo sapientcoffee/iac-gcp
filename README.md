@@ -1,5 +1,5 @@
 # Demo IAC with GCP
-
+This is a simple demo to highlight how "infrastructure as code" can be used to configure networking and webservers in GCP. It has been created for demo purposes
 
 [![Open this project in Cloud
 Shell](http://gstatic.com/cloudssh/images/open-btn.png)](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/SapientCoffee/iac-gcp.git)
@@ -44,14 +44,14 @@ The `terraform` cli will walk through the directory and read all the `.tf` files
 Great we now have the ability to codify our configuration and the state is stored somewhere safe (I hope). Now how can multiple engineers work on the infrastructure?
 
 ## Git
-Developers have been using `git` for years, but it doenst mean source control is limited to only developers. We can utilse it to hlp operations or infrastructure.
+Developers have been using `git` for years, but it doenst mean source control is limited to only developers. We can utilse it to hlp operations or infrastructure teams.
 
 Show the git (in my case GitHub) UI to highlight
 * History
 * audit 
 * click around the GitHub UI and show some of the `git` CLI explaining what it is doing.
 
-Now that we have the configuration and satet stored in a remote location this enables us to leverage another practice that has serveed the development world well and helps with automation to reduce the chance of human error and also execute changes as soon as approval occurd (in you have that step)
+Now that we have the configuration and state stored in a remote location this enables us to leverage another practice that has serveed the development world well and helps with automation to reduce the chance of human error and also execute changes as soon as approval occurd (in you have that step)
 
 ## Cloud Build
 
@@ -64,7 +64,8 @@ The advantage of pipline stuff with Cloud Build is that you can add additonal st
 
 I have used cloud build;
 
-<screenshot of cloud build UI>
+![Cloud Build Dashboard](images/cloud-build-dashboard.png)
+![Cloud Build Details](images/cloud-build-detail.png)
 
 When you create the cloud build job you specify a `yaml` file with instuctions of what to do.
 
@@ -86,7 +87,7 @@ steps:
 ```
 
 ### Trigger
-Create a trigger so that when push is done in git it auto "builds"
+Create a trigger so that when push is done in git it auto "builds" - show the pippeline that already exist
 
 ## Change
 
@@ -113,21 +114,84 @@ Notice that the stuff just changed is not local ... need to do a `git pull`
 
 ## Validator step
 
+Enable the trigger - https://pantheon.corp.google.com/cloud-build/triggers/edit/b0fd3584-430f-48be-852c-ab422815e638?project=coffee-with-rob
+
 ![](images/forseti-pipeline.png)
 
 ## Config Export
 What if I have already configured a project, can I export what TF could look like?
 
-(pick out the network & firewall exports from the `gcloud beta` command)
+(pick out the network & firewall exports from the `gcloud beta resource-config bulk-export` command)
+
+```bash
+gcloud beta resource-config bulk-export --resource-format=terraform --project coffee-with-rob --path terraform\
+        --resource-types ComputeInstance,ComputeNetwork,ComputeSubnetwork,ComputeFirewall,Service
+```
 
 ## Modules
-Discuss and highlight modules with the other TF files (create webserver etc.)
+A Terraform module is a set of Terraform configuration files in a single directory. Even a simple configuration consisting of a single directory with one or more .tf files is a module.
+
+It makes it easier to creaet reusable templates.
+
+The example here is the deployment of a web server with firewall and network config (terraform/web.tf)
+
+```hcl
+module "vpc" {
+  source  = "../modules/vpc"
+  project = "${var.project}"
+  env     = "${var.env}"
+}
+
+module "http_server" {
+  source  = "../modules/http_server"
+  project = "${var.project}"
+  subnet  = "${module.vpc.subnet}"
+}
+
+module "firewall" {
+  source  = "../modules/firewall"
+  project = "${var.project}"
+  subnet  = "${module.vpc.subnet}"
+}
+```
+
+I will also show how you can export config settings (terraform/output.tf)
+
+```hcl
+output "network" {
+  value = "${module.vpc.network}"
+}
+
+output "subnet" {
+  value = "${module.vpc.subnet}"
+}
+
+output "firewall_rule" {
+  value = "${module.firewall.firewall_rule}"
+}
+
+output "instance_name" {
+  value = "${module.http_server.instance_name}"
+}
+
+output "external_ip" {
+  value = "${module.http_server.external_ip}"
+}
+```
+
+Now if I commit the changes and push to the repo the Cloud Build pipeline shoudl kick off and deploy the webserver and output the details we requested.
 
 ## Staging
 Show the example from https://cloud.google.com/architecture/managing-infrastructure-as-code
 
 http://iac.gcp-demo.coffee
 https://pantheon.corp.google.com/cloud-build/builds;region=global/742f7c4d-66b9-4563-94e6-4d92a2a60f6b?project=coffee-with-rob
+
+# Clean up
+
+```bash
+terraform destroy
+```
 
 # License
 
