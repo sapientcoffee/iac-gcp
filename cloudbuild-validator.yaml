@@ -3,12 +3,12 @@ steps:
 # Run terraform init
 - name: gcr.io/config-validator/terraform-validator
   entrypoint: terraform
-  dir: terraform
+  dir: 'terraform/'
   args:
   - init
 # Run terraform plan and save to terraform.plan file (binary) 
 - name: gcr.io/config-validator/terraform-validator
-  dir: terraform/
+  dir: 'terraform/'
   entrypoint: terraform
   args:
   - plan
@@ -17,10 +17,10 @@ steps:
 - name: gcr.io/config-validator/terraform-validator
   entrypoint: "/bin/bash"
   args: ['-c', 'terraform show -json terraform.plan > terraform.json']
-  dir: terraform
+  dir: 'terraform/'
 # Run Terrafrom-validator validate on the Tarrafrom plan and look for violations
 - name: gcr.io/config-validator/terraform-validator
-  dir: terraform
+  dir: 'terraform/'
   args:
   - validate
   - terraform.json
