@@ -49,19 +49,19 @@ resource "google_compute_firewall" "allow-something" {
 
 
 // Do this one with a PR
-# resource "google_compute_firewall" "allow-ssh" {
-#   name    = "${var.prefix}-allow-ssh"
-#   network = "${google_compute_network.iac-virt-net.name}"
-#   //project = "${var.project}"
+resource "google_compute_firewall" "allow-ssh" {
+  name    = "${var.prefix}-allow-ssh"
+  network = "${google_compute_network.iac-virt-net.name}"
+  //project = "${var.project}"
 
-#   allow {
-#     protocol = "tcp"
-#     ports    = ["22"]
-#   }
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
 
-#   source_ranges = ["0.0.0.0/0"]
-#   target_tags   = ["allow-ssh"]
-# }
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["allow-ssh"]
+}
 
 
 
