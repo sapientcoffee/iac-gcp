@@ -22,30 +22,30 @@ resource "google_compute_subnetwork" "subnet-espresso" {
   ip_cidr_range = "192.168.101.0/26"
   network       = "${google_compute_network.iac-virt-net.self_link}"
 
-#   // Add some logging
-#   log_config {
-#     aggregation_interval = "INTERVAL_10_MIN"
-#     flow_sampling        = 0.5
-#     metadata             = "INCLUDE_ALL_METADATA"
-#   }
+  // Add some logging/IPFix
+  log_config {
+    aggregation_interval = "INTERVAL_10_MIN"
+    flow_sampling        = 0.5
+    metadata             = "INCLUDE_ALL_METADATA"
+  }
 }
 
 // Make a change without PR
-# resource "google_compute_firewall" "allow-something" {
-#   name    = "${var.prefix}-allow-something"
-#   network = "${google_compute_network.iac-virt-net.name}"
-#   //project = "${var.project}"
-#   description = "Creates firewall rule targeting tagged instances"
+resource "google_compute_firewall" "allow-something" {
+  name    = "${var.prefix}-allow-something"
+  network = "${google_compute_network.iac-virt-net.name}"
+  //project = "${var.project}"
+  description = "Creates firewall rule targeting tagged instances"
 
-#   allow {
-#     protocol = "icmp"
-#   }
-#   allow {
-#     protocol = "tcp"
-#     ports    = ["80", "8080", "1000-2000"]
-#   }
-#   source_tags = ["web"]
-# }
+  allow {
+    protocol = "icmp"
+  }
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "8080", "1000-2000"]
+  }
+  source_tags = ["web"]
+}
 
 
 // Do this one with a PR
