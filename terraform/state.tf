@@ -4,8 +4,8 @@
 
 # gcloud auth application-default login
 
-terraform {
-  backend "gcs" {
-    bucket = "coffee-with-rob-terraform-state"
-  }
-}
+# terraform {
+#   backend "gcs" {
+#     bucket = "coffee-with-rob-terraform-state"
+#   }
+# }
