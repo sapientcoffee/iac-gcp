@@ -5,6 +5,15 @@ resource "google_compute_network" "iac-virt-net" {
   mtu                     = 1460
 }
 
+// Flat White Subnet
+resource "google_compute_subnetwork" "flat-white" {
+  name          = "${var.prefix}-flat-white"
+  project       = "${var.project}"
+  region        = "${var.region}"
+  ip_cidr_range = "192.168.16.0/22"
+  network       = "${google_compute_network.iac-virt-net.self_link}"
+}
+
 // Espresso Subnet
 resource "google_compute_subnetwork" "subnet-espresso" {
   name          = "${var.prefix}-espresso"
@@ -19,15 +28,6 @@ resource "google_compute_subnetwork" "subnet-espresso" {
 #     flow_sampling        = 0.5
 #     metadata             = "INCLUDE_ALL_METADATA"
 #   }
-}
-
-// Flat White Subnet
-resource "google_compute_subnetwork" "flat-white" {
-  name          = "${var.prefix}-flat-white"
-  project       = "${var.project}"
-  region        = "${var.region}"
-  ip_cidr_range = "192.168.16.0/22"
-  network       = "${google_compute_network.iac-virt-net.self_link}"
 }
 
 // Make a change without PR
