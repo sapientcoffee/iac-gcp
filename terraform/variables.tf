@@ -10,6 +10,7 @@ variable "instance_type" {
 
 variable "PROJECT" {
   type = string
+  default = "coffee-with-iac"
 }
 
 variable "prefix" {
