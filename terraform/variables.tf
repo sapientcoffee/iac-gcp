@@ -10,7 +10,6 @@ variable "instance_type" {
 
 variable "project" {
   type = string
-  default = "bean2cup"
 }
 
 variable "prefix" {
