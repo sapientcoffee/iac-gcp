@@ -14,18 +14,18 @@
 
 module "vpc" {
   source  = "../modules/vpc"
-  PROJECT = "${var.PROJECT}"
+  project = "${var.project}"
   env     = "${var.env}"
 }
 
 module "http_server" {
   source  = "../modules/http_server"
-  PROJECT = "${var.PROJECT}"
+  project = "${var.project}"
   subnet  = "${module.vpc.subnet}"
 }
 
 module "firewall" {
   source  = "../modules/firewall"
-  PROJECT = "${var.PROJECT}"
+  project = "${var.project}"
   subnet  = "${module.vpc.subnet}"
 }

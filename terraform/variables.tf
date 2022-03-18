@@ -8,7 +8,7 @@ variable "instance_type" {
   default = "n1-standard-1"
 }
 
-variable "PROJECT" {
+variable "project" {
   type = string
   default = "coffee-with-iac"
 }
