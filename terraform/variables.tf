@@ -8,7 +8,7 @@ variable "instance_type" {
   default = "n1-standard-1"
 }
 
-variable "project" {
+variable "PROJECT" {
   type = string
 }
 

@@ -1,6 +1,6 @@
 resource "google_compute_network" "iac-virt-net" {
   name = "${var.prefix}-virt-net"
-  project = "${var.project}"
+  PROJECT = "${var.PROJECT}"
   auto_create_subnetworks = false
   mtu                     = 1460
 }
@@ -8,7 +8,7 @@ resource "google_compute_network" "iac-virt-net" {
 // Flat White Subnet
 resource "google_compute_subnetwork" "flat-white" {
   name          = "${var.prefix}-flat-white"
-  project       = "${var.project}"
+  PROJECT       = "${var.PROJECT}"
   region        = "${var.region}"
   ip_cidr_range = "192.168.16.0/22"
   network       = "${google_compute_network.iac-virt-net.self_link}"
@@ -18,7 +18,7 @@ resource "google_compute_subnetwork" "flat-white" {
 resource "google_compute_subnetwork" "subnet-espresso" {
   name          = "${var.prefix}-espresso"
   region        = "${var.region}"
-  project       = "${var.project}"
+  PROJECT       = "${var.PROJECT}"
   ip_cidr_range = "192.168.101.0/26"
   network       = "${google_compute_network.iac-virt-net.self_link}"
 
@@ -34,7 +34,7 @@ resource "google_compute_subnetwork" "subnet-espresso" {
 # resource "google_compute_firewall" "allow-something" {
 #   name    = "${var.prefix}-allow-something"
 #   network = "${google_compute_network.iac-virt-net.name}"
-#   //project = "${var.project}"
+#   //PROJECT = "${var.PROJECT}"
 #   description = "Creates firewall rule targeting tagged instances"
 
 #   allow {
@@ -52,7 +52,7 @@ resource "google_compute_subnetwork" "subnet-espresso" {
 # resource "google_compute_firewall" "allow-ssh" {
 #   name    = "${var.prefix}-allow-ssh"
 #   network = "${google_compute_network.iac-virt-net.name}"
-#   //project = "${var.project}"
+#   //PROJECT = "${var.PROJECT}"
 
 #   allow {
 #     protocol = "tcp"
@@ -72,7 +72,7 @@ resource "google_compute_subnetwork" "subnet-espresso" {
 #   location = var.region
 # }
 
-# # This creates a new Google Kubernetes Engine (GKE) cluster inside our project.
+# # This creates a new Google Kubernetes Engine (GKE) cluster inside our PROJECT.
 # # This operation can take a few minutes to complete, but Terraform will show
 # # output and updates as the creation progresses.
 # resource "google_container_cluster" "iac-cluster" {
