@@ -1,0 +1,11 @@
+apiVersion: container.gcp.gke.cloud.google.com/v1beta1
+kind: Cluster
+metadata:
+  annotations:
+  name: cluster-1 # name of gke cluster
+spec:
+  forProvider:
+    initialNodeCount: 1
+    location: us-central1-c # add gcp region 
+    minMasterVersion: "1.26"
+   # removeDefaultNodePool: true
