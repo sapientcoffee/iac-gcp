@@ -1,0 +1,8 @@
+apiVersion: compute.gcp.gke.cloud.google.com/v1beta1
+kind: Network
+metadata:
+  name: chemex
+spec:
+  forProvider:
+    autoCreateSubnetworks: false
+    # routingMode: GLOBAL

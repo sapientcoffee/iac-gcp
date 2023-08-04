@@ -2,10 +2,10 @@ apiVersion: container.gcp.gke.cloud.google.com/v1beta1
 kind: Cluster
 metadata:
   annotations:
-  name: ethiopian-single-origin #cluster name
+  name: ethiopian-single-origin-autopilot #cluster name
 spec:
   forProvider:
-    initialNodeCount: 1
+    # initialNodeCount: 1
+    defaultMaxPodsPerNode: 32
     location: us-central1-c
-    minMasterVersion: "1.26"
-    removeDefaultNodePool: true
+    enableAutopilot: true

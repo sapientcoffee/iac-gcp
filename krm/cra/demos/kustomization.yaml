@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ./gcp-gke.yaml
+- ./gcp-gke-nodepool.yaml
+- ./gcp-network.yaml
+- ./gcp-subnetwork.yaml
+- ./gcp-gke-autopilot.yaml

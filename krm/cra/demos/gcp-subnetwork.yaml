@@ -1,0 +1,15 @@
+apiVersion: compute.gcp.gke.cloud.google.com/v1beta1
+kind: Subnetwork
+metadata:
+  name: circular-filter
+spec:
+  forProvider:
+    ipCidrRange: 10.1.1.0/24
+    network: chemex
+    networkSelector:
+      matchLabels:
+        acme.com/name: chemex-label
+    region: us-central1
+    secondaryIpRange:
+      - ipCidrRange: 192.168.10.0/24
+        rangeName: circular-filter-secondary

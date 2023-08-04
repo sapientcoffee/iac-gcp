@@ -1,0 +1,18 @@
+apiVersion: container.gcp.gke.cloud.google.com/v1beta1
+kind: NodePool
+metadata:
+  annotations:
+    crossplane.io/external-name: ethiopian-single-origin-grind # name of nodepool
+  name: ethiopian-single-origin-grind # name of nodepool
+spec:
+  forProvider:
+    cluster: ethiopian-single-origin # name of cluster to add node pool to
+    location: us-central1-c # location of the node pool 
+    nodeCount: 1
+    #version: 1.25
+    nodeConfig:
+      - machineType: e2-medium
+    networkConfig:
+      # - podIpv4CidrBlock: 10.1.1.0/24
+      - createPodRange: true
+        enablePrivateNodes: true

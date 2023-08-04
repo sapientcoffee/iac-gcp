@@ -1,8 +1,10 @@
 # Cloud Resource Accelerator (CRA)
-
+This is some examples/demos of me playing with CRA to better understand its capabilities.
 
 https://github.com/bkauf/cloud-resource-accelerator/blob/main/samples/gcp-gke-nodepool.yaml
 
+
+## Setup
 Enable APIs;
 ```
 gcloud services enable krmapihosting.googleapis.com \
@@ -56,3 +58,32 @@ gcloud projects add-iam-policy-binding $PROJECT_ID \
     --role "roles/owner" \
     --project $PROJECT_ID
 ```
+
+## Examples
+
+Spin up and down infra
+
+### Google Cloud
+
+Some examples;
+ * [GKE Cluster](./demos/gcp-gke.yaml)
+ * [GKE Nodepool](./demos/gcp-gke-nodepool.yaml)
+
+
+[Supported](https://cloud.google.com/anthos/clusters/docs/multi-cloud/crx/googlecloud/table) Google Cloud Resources.
+
+#### Create
+
+#### Delete
+
+#### Update
+
+#### Import Existing Cluster
+
+
+
+#### Kustomize
+
+`kubectl get managed`
+`kubectl apply --dry-run=client -o yaml -k ./demos`
+`kubectl apply -k ./demos`
