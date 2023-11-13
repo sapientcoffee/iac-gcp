@@ -1,8 +1,8 @@
 # Demo IAC with GCP
 This is a simple demo to highlight how "infrastructure as code" can be used to configure networking and webservers in GCP. It has been created for demo purposes
 
-[![Open this project in Cloud
-Shell](http://gstatic.com/cloudssh/images/open-btn.png)](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/SapientCoffee/iac-gcp.git)
+
+Moved to [https://gitlab.com/applied-dora/Infrastructure-as-code](https://gitlab.com/applied-dora/Infrastructure-as-code)
 
 ## Clickops
 Traditional "click ops" options of ustilising the GUI to create resources.
